@@ -4,17 +4,15 @@
 
 void drawBoard(sf::RenderWindow& window)
 {
-    sf::Vector2f squareSize = 1.0f/10.0f * cfg::window_size_f;
-
     for (int i=0; i<100; i++)
     {   
+        //determine rectanglesize
+        sf::RectangleShape square(cfg::squareSize);
+        
+        //determine rectangle position
         int row = i % 10;
         int column = (i - row) / 10;
-        
-        //determine rectanglesize
-        sf::RectangleShape square(squareSize);
-        //determine rectangle position
-        sf::Vector2f position = {row * squareSize.x, column * squareSize.y};
+        sf::Vector2f position = {row * cfg::squareSize.x, column * cfg::squareSize.y};
         square.setPosition(position);
 
         //color square
