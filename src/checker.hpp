@@ -2,12 +2,12 @@
 
 #include "config.hpp"
 
-struct checker
+struct Checker
 {
     int square;
     const int color;
 
-    checker(int sqr, int col):
+    Checker(int sqr, int col):
         square(sqr),
         color(col)
         {}
