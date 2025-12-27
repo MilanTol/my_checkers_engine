@@ -1,10 +1,11 @@
 #include <SFML/Graphics.hpp>
 
 #include "events.hpp"
+#include "config.hpp"
 
 int main()
 {
-    auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "Let's play checkers!");
+    auto window = sf::RenderWindow(sf::VideoMode({cfg::window_size.x, cfg::window_size.y}), "Let's play checkers!");
     window.setFramerateLimit(60);
 
     while (window.isOpen())
