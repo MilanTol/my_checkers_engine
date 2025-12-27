@@ -12,6 +12,6 @@ sf::Vector2f const window_size_f = {1000.0f, 1000.0f};
 sf::Vector2f const squareSize = 1.0f/10.0f * cfg::window_size_f;
 
 //checkers configuration
-double const checker_radius = 20;
+double const checker_radius = 25;
 }
 
