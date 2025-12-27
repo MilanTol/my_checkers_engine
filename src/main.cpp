@@ -44,6 +44,12 @@ std::vector<Checker> init_white()
     return white_checkers;
 }
 
+int positionToSquare(sf::Vector2i position)
+{
+    int column = static_cast<int>(position.x / cfg::window_size.x); //this rounds down in c++
+    int row = static_cast<int>(position.y / cfg::window_size.y);
+    return 10*row + column;
+}
 
 int main()
 {
@@ -52,16 +58,33 @@ int main()
 
     std::vector<Checker> black_checkers = init_black();
     std::vector<Checker> white_checkers = init_white();
+    
+    std::vector<Checker> checkers = black_checkers; 
+    checkers.insert(checkers.end(), white_checkers.begin(), white_checkers.end());
 
     while (window.isOpen())
-    {
+    {   
         processEvents(window);
-        
+        if (mouseClicked(window))
+        {
+            sf::Vector2i clicked_point = sf::Mouse::getPosition(window); 
+            int clicked_square = positionToSquare(clicked_point);
+            int selected_checker_index = -1;
+            for (int i = 0; i < checkers.size(); i++)
+            {
+                if (checkers[i].square == clicked_square)
+                    selected_checker_index = i;
+            }
+        }
+
         window.clear();
 
         drawBoard(window);
-        drawCheckers(window, black_checkers);
-        drawCheckers(window, white_checkers);
+
+        // drawCheckers(window, black_checkers);
+        // drawCheckers(window, white_checkers);
+        drawCheckers(window, checkers);
+
 
         window.display();
     }
