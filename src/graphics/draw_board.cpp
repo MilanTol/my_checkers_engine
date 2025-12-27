@@ -10,8 +10,8 @@ void drawBoard(sf::RenderWindow& window)
         sf::RectangleShape square(cfg::squareSize);
         
         //determine rectangle position
-        int row = i % 10;
-        int column = (i - row) / 10;
+        int column = i % 10;
+        int row = (i - column) / 10;
         sf::Vector2f position = {row * cfg::squareSize.x, column * cfg::squareSize.y};
         square.setPosition(position);
 
