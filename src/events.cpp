@@ -29,3 +29,17 @@ bool mouseClicked(sf::Window& window)
         }
     }  
 }
+
+bool mouseReleased(sf::Window& window)
+{
+    while (const std::optional event = window.pollEvent())
+    {
+        if (const auto* keyReleased = event->getIf<sf::Event::MouseButtonReleased>())
+        {   
+            if (keyReleased->button == sf::Mouse::Button::Left)
+            {
+                return 1;
+            }
+        }
+    }    
+}
