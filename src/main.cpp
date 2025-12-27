@@ -3,6 +3,7 @@
 #include "events.hpp"
 #include "config.hpp"
 #include "graphics/draw_board.hpp"
+#include "checker.hpp"
 
 int main()
 {
