@@ -1,20 +1,16 @@
 #include <SFML/Graphics.hpp>
 
+#include "events.hpp"
+
 int main()
 {
-    auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "CMake SFML Project");
-    window.setFramerateLimit(144);
+    auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "Let's play checkers!");
+    window.setFramerateLimit(60);
 
     while (window.isOpen())
     {
-        while (const std::optional event = window.pollEvent())
-        {
-            if (event->is<sf::Event::Closed>())
-            {
-                window.close();
-            }
-        }
-
+        processEvents(window);
+        
         window.clear();
         window.display();
     }
