@@ -15,3 +15,17 @@ void processEvents(sf::Window& window)
         }
     }   
 }
+
+bool mouseClicked(sf::Window& window)
+{
+    while (const std::optional event = window.pollEvent())
+    {
+        if (const auto* keyPressed = event->getIf<sf::Event::MouseButtonPressed>())
+        {   
+            if (keyPressed->button == sf::Mouse::Button::Left)
+            {
+                return 1;
+            }
+        }
+    }  
+}
