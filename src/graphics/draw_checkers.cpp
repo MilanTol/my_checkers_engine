@@ -12,6 +12,8 @@ void drawCheckers(sf::RenderWindow& window, std::vector<Checker> checkers)
         int column = (checker.square - row) / 10;
         sf::Vector2f position = {row * cfg::squareSize.x, column * cfg::squareSize.y};
         position += cfg::squareSize/2.0f; //add half a square to center the image on square
+        position.x -= cfg::checker_radius;
+        position.y -= cfg::checker_radius;
         checker_img.setPosition(position);
 
         //set color
