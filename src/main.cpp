@@ -46,8 +46,8 @@ std::vector<Checker> init_white()
 
 int positionToSquare(sf::Vector2i position)
 {
-    int column = static_cast<int>(position.x / cfg::window_size.x); //this rounds down in c++
-    int row = static_cast<int>(position.y / cfg::window_size.y);
+    int column = static_cast<int>( position.x / (cfg::window_size.x/10) ); //this rounds down in c++
+    int row = static_cast<int>( position.y / (cfg::window_size.y/10) );
     return 10*row + column;
 }
 
@@ -66,17 +66,31 @@ int main()
     {   
         processEvents(window);
         if (mouseClicked(window))
-        {
+        {   
             sf::Vector2i clicked_point = sf::Mouse::getPosition(window); 
             int clicked_square = positionToSquare(clicked_point);
-            int selected_checker_index = -1;
             for (int i = 0; i < checkers.size(); i++)
             {
                 if (checkers[i].square == clicked_square)
-                    selected_checker_index = i;
+                {
+                    event_poll.selected_checker_index = i;
+                    break;
+                }
             }
         }
+        if (event_poll.mouseReleased)
+        {   
+            if (event_poll.selected_checker_index != -1)
+            {
+                sf::Vector2i released_point = sf::Mouse::getPosition(window); 
+                int released_square = positionToSquare(released_point);
+                checkers[event_poll.selected_checker_index].square = released_square;
+                std::cout << event_poll.selected_checker_index << std::endl;           
+                event_poll.selected_checker_index = -1;
+            }
 
+        }
+        
         window.clear();
 
         drawBoard(window);
