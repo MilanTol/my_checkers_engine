@@ -5,7 +5,7 @@
 struct Checker
 {
     int square;
-    const int color;
+    int color;
 
     Checker(int sqr, int col):
         square(sqr),
