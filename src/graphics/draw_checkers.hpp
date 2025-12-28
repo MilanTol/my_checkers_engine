@@ -4,4 +4,4 @@
 #include "../position.hpp"
 
 void drawCheckers(sf::RenderWindow&, std::vector<Checker>);
-void drawCheckers(Position);
+void drawCheckers(sf::RenderWindow&, Position);

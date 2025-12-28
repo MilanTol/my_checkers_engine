@@ -28,7 +28,9 @@ struct LegalMoves
         checkCaptureDownLeft(origin, position);
         if (captureDownLeft){return;}
 
+        std::cout << "MoveLeft" << std::endl;
         checkMoveLeft(origin, position);
+        std::cout << "MoveRight" << std::endl;
         checkMoveRight(origin, position);
     }
 
@@ -48,7 +50,7 @@ struct LegalMoves
         (               
             position.turn.forWhite() and
             position.blackSquares[Square(origin).upLeft()] and
-            position.emptySquares[Square(Square(origin).upLeft()).upLeft()] and
+            position.isEmpty(Square(Square(origin).upLeft()).upLeft()) and
             (Square(origin).getRow() > 1) and
             (Square(origin).getColumn() > 1)
         )
@@ -59,7 +61,7 @@ struct LegalMoves
         (
             position.turn.forBlack() and
             position.whiteSquares[Square(origin).upLeft()] and
-            position.emptySquares[Square(Square(origin).upLeft()).upLeft()] and
+            position.isEmpty(Square(Square(origin).upLeft()).upLeft()) and
             (Square(origin).getRow() > 1) and
             (Square(origin).getColumn() > 1)        
         )
@@ -74,7 +76,7 @@ struct LegalMoves
         (               
             position.turn.forWhite() and
             position.blackSquares[Square(origin).upRight()] and
-            position.emptySquares[Square(Square(origin).upRight()).upRight()] and
+            position.isEmpty(Square(Square(origin).upRight()).upRight()) and
             (Square(origin).getRow() > 1) and
             (Square(origin).getColumn() > 1)
         )
@@ -85,7 +87,7 @@ struct LegalMoves
         (
             position.turn.forBlack() and
             position.whiteSquares[Square(origin).upRight()] and
-            position.emptySquares[Square(Square(origin).upRight()).upRight()] and
+            position.isEmpty(Square(Square(origin).upRight()).upRight()) and
             (Square(origin).getRow() > 1) and
             (Square(origin).getColumn() < 8)        
         )
@@ -100,7 +102,7 @@ struct LegalMoves
         (               
             position.turn.forWhite() and
             position.blackSquares[Square(origin).downRight()] and
-            position.emptySquares[Square(Square(origin).downRight()).downRight()] and
+            position.isEmpty(Square(Square(origin).downRight()).downRight()) and
             (Square(origin).getRow() < 8) and
             (Square(origin).getColumn() < 8)
         )
@@ -111,7 +113,7 @@ struct LegalMoves
         (
             position.turn.forBlack() and
             position.whiteSquares[Square(origin).downRight()] and
-            position.emptySquares[Square(Square(origin).downRight()).downRight()] and
+            position.isEmpty(Square(Square(origin).downRight()).downRight()) and
             (Square(origin).getRow() < 8) and
             (Square(origin).getColumn() < 8)        
         )
@@ -126,7 +128,7 @@ struct LegalMoves
         (               
             position.turn.forWhite() and
             position.blackSquares[Square(origin).downLeft()] and
-            position.emptySquares[Square(Square(origin).downLeft()).downLeft()] and
+            position.isEmpty(Square(Square(origin).downLeft()).downLeft()) and
             (Square(origin).getRow() < 8) and
             (Square(origin).getColumn() > 1)
         )
@@ -136,19 +138,20 @@ struct LegalMoves
         (
             position.turn.forBlack() and
             position.whiteSquares[Square(origin).downLeft()] and
-            position.emptySquares[Square(Square(origin).downLeft()).downLeft()] and
+            position.isEmpty(Square(Square(origin).downLeft()).downLeft()) and
             (Square(origin).getRow() < 8) and
             (Square(origin).getColumn() > 1)        
         )
         {captureDownLeft = true;}                   
     }
 
+
     void checkMoveRight(int origin, Position& position)
     {
         if
         (
             position.turn.forWhite() and
-            position.emptySquares[Square(origin).upRight()] and
+            position.isEmpty(Square(origin).upRight()) and
             (Square(origin).getRow()>0) and
             (Square(origin).getColumn()<9)
         )
@@ -156,7 +159,7 @@ struct LegalMoves
         if
         (
             position.turn.forBlack() and
-            position.emptySquares[Square(origin).downRight()] and
+            position.isEmpty(Square(origin).downRight()) and
             (Square(origin).getRow()<9) and
             (Square(origin).getColumn()<9)
         )
@@ -169,7 +172,7 @@ struct LegalMoves
         if
         (
             position.turn.forWhite() and
-            position.emptySquares[Square(origin).upLeft()] and
+            position.isEmpty(Square(origin).upLeft()) and
             (Square(origin).getRow()>0) and
             (Square(origin).getColumn()>0)
         )
@@ -177,7 +180,7 @@ struct LegalMoves
         if
         (
             position.turn.forBlack() and
-            position.emptySquares[Square(origin).downLeft()] and
+            position.isEmpty(Square(origin).downLeft()) and
             (Square(origin).getRow()<9) and
             (Square(origin).getColumn()>0)
         )
