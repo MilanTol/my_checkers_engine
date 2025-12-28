@@ -16,7 +16,7 @@ struct Square
     }
     int getRow()
     {
-        return (square - getRow()) / 10;
+        return (square - getColumn()) / 10;
     }
 
     int upRight()
