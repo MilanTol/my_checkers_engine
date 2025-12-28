@@ -36,8 +36,15 @@ struct Square
         return square + 9;
     }
 
-    int distanceFromSides()
+    int distanceFromEdge()
     {    
-        return std::max(getColumn(), 9 - getColumn());
+        return std::min(
+            {
+            getColumn(), 
+            9 - getColumn(),
+            getRow(),
+            9 - getRow()
+            }
+        );
     }
 };
