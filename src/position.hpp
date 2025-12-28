@@ -1,11 +1,15 @@
 #pragma once
 
 #include "checker.hpp"
+#include "turn.hpp"
+#include "square.hpp"
 
 struct Position
 {   
     bool whiteSquares[100];
     bool blackSquares[100];
+    bool emptySquares[100];
+    Turn turn;
     
     Position(std::vector<Checker> checkers)
     {
@@ -23,4 +27,41 @@ struct Position
                 blackSquares[checker.square] = true;
         }
     }
+    
+    void moveRight(int origin)
+    {
+        if (whiteSquares[origin])
+        {
+            whiteSquares[origin] = false;
+            whiteSquares[Square(origin).upRight()] = true;
+        }
+        if (blackSquares[origin])
+        {
+            blackSquares[origin] = false;
+            blackSquares[Square(origin).downRight()] = true;
+        }
+    }
+
+    void moveLeft(int origin)
+    {
+        if (whiteSquares[origin])
+        {
+            whiteSquares[origin] = false;
+            whiteSquares[Square(origin).upLeft()] = true;
+        }
+        if (blackSquares[origin])
+        {
+            blackSquares[origin] = false;
+            blackSquares[Square(origin).downLeft()] = true;
+        }
+    }
+ 
+    
+
+
+
+
+
+
+    
 };
