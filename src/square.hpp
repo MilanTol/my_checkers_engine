@@ -19,21 +19,21 @@ struct Square
         return (square - getColumn()) / 10;
     }
 
-    int upRight()
+    int upRight(int times=1)
     {
-        return square - 9;
+        return square - times*9;
     }
-    int upLeft()
+    int upLeft(int times = 1)
     {
-        return square - 11;
+        return square - times*11;
     }
-    int downRight()
+    int downRight(int times= 1)
     {
-        return square + 11;
+        return square + times*11;
     }
-    int downLeft()
+    int downLeft(int times= 1)
     {
-        return square + 9;
+        return square + times*9;
     }
 
     int distanceFromEdge()

@@ -6,11 +6,11 @@
 
 #include "config.hpp"
 #include "checker.hpp"
-#include "emptySquares.hpp"
+#include "square.hpp"
 
 #include "position.hpp"
+#include "dynamic_position.hpp"
 #include "legal_moves.hpp"
-#include "square.hpp"
 
 #include "graphics/draw_board.hpp"
 #include "graphics/draw_checkers.hpp"
@@ -24,9 +24,9 @@ int positionToSquare(sf::Vector2i position)
 
 Input input;
 int clicked_square = -1;
-EmptySquares empty_squares;
 
 Position position = Position();
+DynamicPosition dynamic_position = DynamicPosition(position);
 
 int main()
 {
@@ -40,24 +40,19 @@ int main()
         if (input.mouseClicked and clicked_square == -1) // if clicked
         {   
             clicked_square = positionToSquare(sf::Mouse::getPosition(window));
-            LegalMoves legal_moves = LegalMoves(clicked_square, position);
-            std::cout << legal_moves.moveLeft << std::endl;
-
         }
 
-        // if (input.mouseReleased and selected_checker != -1) //if released
-        // {
-        //     int released_square = positionToSquare(sf::Mouse::getPosition(window));
-        //     if (empty_squares.isEmpty(released_square)) //is move.legal()
-        //     {
-        //         empty_squares.setEmpty(checkers[selected_checker].square, true); //empty previous square of checker
-        //         checkers[selected_checker].square = released_square; //update checker square
-        //         empty_squares.setEmpty(checkers[selected_checker].square, false); //fill destination square of checker
-        //     }
-        //     selected_checker = -1;
-        //     input.mouseClicked = false;
-        //     input.mouseReleased = false;
-        // }
+        if (input.mouseReleased and clicked_square != -1) //if released
+        {   
+            int released_square = positionToSquare(sf::Mouse::getPosition(window));
+
+            dynamic_position.move(clicked_square, released_square);
+            position = dynamic_position.position;
+            
+            clicked_square = -1;
+            input.mouseClicked = false;
+            input.mouseReleased = false;
+        }
         
         window.clear();
 

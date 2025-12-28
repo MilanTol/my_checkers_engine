@@ -18,9 +18,9 @@ struct Turn
         {
             turn = 0;
         }
-        if (turn == 0)
+        else if (turn == 0)
         {
-            turn ==1;
+            turn = 1;
         }
     }
 };

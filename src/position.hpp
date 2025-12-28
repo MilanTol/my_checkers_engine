@@ -47,45 +47,18 @@ struct Position
         }
     }
 
+    Position(bool whiteSquares_input[100], bool blackSquares_input[100], Turn t)
+        : turn(t)
+    {
+        for (int i = 0; i < 100; i++) {
+            whiteSquares[i] = whiteSquares_input[i];
+            blackSquares[i] = blackSquares_input[i];
+        }
+    }
+
     bool isEmpty(int square)
     {
         return (!whiteSquares[square] and !blackSquares[square]);
     }
-    
-    void moveRight(int origin)
-    {
-        if (whiteSquares[origin])
-        {
-            whiteSquares[origin] = false;
-            whiteSquares[Square(origin).upRight()] = true;
-        }
-        if (blackSquares[origin])
-        {
-            blackSquares[origin] = false;
-            blackSquares[Square(origin).downRight()] = true;
-        }
-    }
-
-    void moveLeft(int origin)
-    {
-        if (whiteSquares[origin])
-        {
-            whiteSquares[origin] = false;
-            whiteSquares[Square(origin).upLeft()] = true;
-        }
-        if (blackSquares[origin])
-        {
-            blackSquares[origin] = false;
-            blackSquares[Square(origin).downLeft()] = true;
-        }
-    }
- 
-    
-
-
-
-
-
-
     
 };
