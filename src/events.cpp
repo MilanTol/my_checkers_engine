@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 
-void processEvents(sf::Window& window)
+#include "input.hpp"
+
+void processEvents(sf::Window& window, Input& input)
 {
     while (const std::optional event = window.pollEvent())
     {
@@ -13,33 +15,15 @@ void processEvents(sf::Window& window)
             if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
                 window.close();
         }
-    }   
-}
-
-bool mouseClicked(sf::Window& window)
-{
-    while (const std::optional event = window.pollEvent())
-    {
-        if (const auto* keyPressed = event->getIf<sf::Event::MouseButtonPressed>())
-        {   
+        else if (const auto* keyPressed = event->getIf<sf::Event::MouseButtonPressed>())
+        {
             if (keyPressed->button == sf::Mouse::Button::Left)
-            {
-                return 1;
-            }
+                input.mouseClicked = true;
         }
-    }  
-}
-
-bool mouseReleased(sf::Window& window)
-{
-    while (const std::optional event = window.pollEvent())
-    {
-        if (const auto* keyReleased = event->getIf<sf::Event::MouseButtonReleased>())
-        {   
+        else if (const auto* keyReleased = event->getIf<sf::Event::MouseButtonReleased>())
+        {
             if (keyReleased->button == sf::Mouse::Button::Left)
-            {
-                return 1;
-            }
+                input.mouseReleased = true;
         }
-    }    
+    }   
 }

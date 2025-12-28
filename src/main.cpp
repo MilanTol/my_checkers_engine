@@ -1,8 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+
 #include "events.hpp"
+#include "input.hpp"
+
 #include "config.hpp"
 #include "checker.hpp"
+
 #include "graphics/draw_board.hpp"
 #include "graphics/draw_checkers.hpp"
 
@@ -51,6 +55,9 @@ int positionToSquare(sf::Vector2i position)
     return 10*row + column;
 }
 
+Input input;
+int selected_checker = -1;
+
 int main()
 {
     auto window = sf::RenderWindow(sf::VideoMode({cfg::window_size.x, cfg::window_size.y}), "Let's play checkers!");
@@ -64,33 +71,31 @@ int main()
 
     while (window.isOpen())
     {   
-        processEvents(window);
-        if (mouseClicked(window))
+        processEvents(window, input);
+        
+        if (input.mouseClicked and selected_checker == -1)
         {   
-            sf::Vector2i clicked_point = sf::Mouse::getPosition(window); 
-            int clicked_square = positionToSquare(clicked_point);
+            int clicked_square = positionToSquare(sf::Mouse::getPosition(window));
+
             for (int i = 0; i < checkers.size(); i++)
             {
                 if (checkers[i].square == clicked_square)
                 {
-                    event_poll.selected_checker_index = i;
+                    selected_checker = i;
                     break;
                 }
             }
         }
-        if (event_poll.mouseReleased)
-        {   
-            if (event_poll.selected_checker_index != -1)
-            {
-                sf::Vector2i released_point = sf::Mouse::getPosition(window); 
-                int released_square = positionToSquare(released_point);
-                checkers[event_poll.selected_checker_index].square = released_square;
-                std::cout << event_poll.selected_checker_index << std::endl;           
-                event_poll.selected_checker_index = -1;
-            }
 
+        if (input.mouseReleased and selected_checker != -1)
+        {
+            int released_square = positionToSquare(sf::Mouse::getPosition(window));
+            checkers[selected_checker].square = released_square;
+            selected_checker = -1;
+            input.mouseClicked = false;
+            input.mouseReleased = false;
         }
-        
+
         window.clear();
 
         drawBoard(window);

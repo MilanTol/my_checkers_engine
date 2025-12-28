@@ -11,5 +11,4 @@ struct Checker
         square(sqr),
         color(col)
         {}
-    
 };

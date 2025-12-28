@@ -2,7 +2,6 @@
 
 #include <SFML/Window.hpp>
 
-void processEvents(sf::Window&);
+#include "input.hpp"
 
-bool mouseClicked(sf::Window&);
-bool mouseReleased(sf::Window&);
+void processEvents(sf::Window&, Input&);
