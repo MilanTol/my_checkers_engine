@@ -52,6 +52,7 @@ struct LegalMovesFromSquare
         )
         {
             moves.push_back(Move(square, square.upRight(2), square.upRight()));
+            std::cout << square.upRight().square_id << std::endl;
         }
         if 
         (
@@ -63,6 +64,7 @@ struct LegalMovesFromSquare
         )
         {
             moves.push_back(Move(square, square.upRight(2), square.upRight()));
+            capturePossible = true;
         }      
     }
     
@@ -78,6 +80,7 @@ struct LegalMovesFromSquare
         )
         {
             moves.push_back(Move(square, square.downRight(2), square.downRight()));
+            capturePossible = true;
         }
         if 
         (
@@ -89,6 +92,7 @@ struct LegalMovesFromSquare
         )
         {
             moves.push_back(Move(square, square.downRight(2), square.downRight()));
+            capturePossible = true;
         }           
     }
 
@@ -104,6 +108,7 @@ struct LegalMovesFromSquare
         )
         {
             moves.push_back(Move(square, square.downLeft(2), square.downLeft()));
+            capturePossible = true;
         }
             
         if 
@@ -116,6 +121,7 @@ struct LegalMovesFromSquare
         )
         {
             moves.push_back(Move(square, square.downLeft(2), square.downLeft()));
+            capturePossible = true;
         }                   
     }
 
@@ -131,6 +137,7 @@ struct LegalMovesFromSquare
         )
         {
             moves.push_back(Move(square, square.upLeft(2), square.upLeft()));
+            capturePossible = true;
         }
         if 
         (
@@ -142,6 +149,7 @@ struct LegalMovesFromSquare
         )
         {
             moves.push_back(Move(square, square.upLeft(2), square.upLeft()));
+            capturePossible = true;
         }       
     }
 
