@@ -29,6 +29,13 @@ public:
             this->setEmpty(move.origin);
             this->setWhite(move.destination);
             this->setEmpty(move.captured);
+
+            if (move.destination.getRow() == 0)
+            {
+                this->setEmpty(move.destination);
+                this->setWhiteKing(move.destination);
+            }
+
             if (move.isCapture())
             {
                 if (LegalMovesFromSquare(move.destination, *this).capturePossible)
@@ -36,13 +43,22 @@ public:
                     return;
                 }
             }
+
             this->turn.end();
         }
+
         else if (this->turn.forBlack())
         {
             this->setEmpty(move.origin);
             this->setBlack(move.destination);
             this->setEmpty(move.captured);
+
+            if (move.destination.getRow() == 9)
+            {
+                this->setEmpty(move.destination);
+                this->setBlackKing(move.destination);
+            }
+
             if (move.isCapture())
             {
                 if (LegalMovesFromSquare(move.destination, *this).capturePossible)
@@ -50,6 +66,7 @@ public:
                     return;
                 }
             }  
+
             this->turn.end();
         }
 

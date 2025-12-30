@@ -81,6 +81,7 @@ public:
     {
         return blackKings[square.square_id];
     }
+    
     void setWhite(Square square) 
     {
         whiteSquares[square.square_id] = true;
