@@ -7,9 +7,9 @@ struct Move
     Square origin;
     Square destination;
 
-    Move(Square origin_init, Square desination_init):
+    Move(Square origin_init, Square destination_init):
         origin(origin_init),
-        destination(desination_init)
+        destination(destination_init)
     {};
 
     bool operator==(const Move& move) const
