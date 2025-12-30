@@ -4,36 +4,36 @@
 
 struct Square
 {
-    int square;
+    int square_id;
 
-    Square(int square_init) : 
-        square(square_init)
+    Square(int square_id_init) : 
+        square_id(square_id_init)
     {}
 
     int getColumn() const
     {
-        return square % 10;
+        return square_id % 10;
     }
     int getRow() const
     {
-        return (square - getColumn()) / 10;
+        return (square_id - getColumn()) / 10;
     }
 
-    int upRight(int times=1) const
+    Square upRight(int times=1) const
     {
-        return square - times*9;
+        return Square(square_id - times*9);
     }
-    int upLeft(int times=1) const 
+    Square upLeft(int times=1) const 
     {
-        return square - times*11;
+        return Square(square_id - times*11);
     }
-    int downRight(int times=1) const
+    Square downRight(int times=1) const
     {
-        return square + times*11;
+        return Square(square_id + times*11);
     }
-    int downLeft(int times=1) const
+    Square downLeft(int times=1) const
     {
-        return square + times*9;
+        return Square(square_id + times*9);
     }
 
     int distanceFromEdge() const

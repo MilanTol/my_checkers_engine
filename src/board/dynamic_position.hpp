@@ -3,68 +3,71 @@
 #include "turn.hpp"
 #include "square.hpp"
 #include "position.hpp"
-#include "moves/legal_moves.hpp"
+#include "moves/legal_moves_from_square.hpp"
 
-struct DynamicPosition : public Position
+class DynamicPosition : public Position
 {   
+
+public:
+
     // constructor: copy arrays from Position
     DynamicPosition(const Position& input_position)
     {
         for (int i = 0; i < 100; i++) {
-            whiteSquares[i] = input_position.whiteSquares[i];
-            blackSquares[i] = input_position.blackSquares[i];
+            whiteSquares[i] = input_position.isWhite(Square(i));
+            blackSquares[i] = input_position.isBlack(Square(i));
         }
     }
 
-    void moveRight(int origin)
+    void moveRight(Square origin)
     {
-        if (whiteSquares[origin])
+        if (this->isWhite(origin))
         {
-            whiteSquares[origin] = false;
-            whiteSquares[Square(origin).upRight()] = true;
+            this->setEmpty(origin);
+            this->setWhite(origin.upRight());
             turn.end();
         }
-        if (blackSquares[origin])
+        if (this->isBlack(origin))
         {
-            blackSquares[origin] = false;
-            blackSquares[Square(origin).downRight()] = true;
+            this->setEmpty(origin);
+            this->setBlack(origin.downRight());
             turn.end();
         }
     }
 
-    void moveLeft(int origin)
+    void moveLeft(Square origin)
     {   
-        if (whiteSquares[origin])
+        if (this->isWhite(origin))
         {   
-            whiteSquares[origin] = false;
-            whiteSquares[Square(origin).upLeft()] = true;
+            this->setEmpty(origin);
+            this->setWhite(origin.upLeft());
             turn.end();
         }
-        if (blackSquares[origin])
+        if (this->isBlack(origin))
         {
-            blackSquares[origin] = false;
-            blackSquares[Square(origin).downLeft()] = true;
+            this->setEmpty(origin);
+            this->setBlack(origin.downLeft());
             turn.end();
         }
     }
  
-    void move(int origin, int destination)
+    void move(Square origin, Square destination)
     {
-        LegalMoves legal_moves = LegalMoves(origin, *this);
+        LegalMovesFromSquare legal_moves = LegalMovesFromSquare(origin, *this);
         
-        if (legal_moves.moveLeft && Square(origin).upLeft() == destination)
+        if (legal_moves.moveLeft && origin.upLeft().square_id == destination.square_id)
         {
             moveLeft(origin);
         }
-        if (legal_moves.moveLeft && Square(origin).downLeft() == destination)
+        if (legal_moves.moveLeft && origin.downLeft().square_id == destination.square_id)
         {
             moveLeft(origin);
         }
-        if (legal_moves.moveRight && Square(origin).upRight() == destination)
+        if (legal_moves.moveRight && origin.upRight().square_id == destination.square_id)
         {
             moveRight(origin);
         }
-        if (legal_moves.moveRight && Square(origin).downRight() == destination)
+        if (legal_moves.moveRight && origin.downRight().square_id == destination.square_id)
         {
             moveRight(origin);
         }  

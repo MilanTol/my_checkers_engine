@@ -39,11 +39,11 @@ void drawCheckers(sf::RenderWindow& window, Position position)
 {
     for (int i = 0; i < 100; i++)
     {
-        if (position.whiteSquares[i])
+        if (position.isWhite(Square(i)))
         {
             drawWhiteChecker(window, i);
         }
-        if (position.blackSquares[i])
+        if (position.isBlack(Square(i)))
         {
             drawBlackChecker(window, i);
         }

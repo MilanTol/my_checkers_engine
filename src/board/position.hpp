@@ -1,13 +1,19 @@
 #pragma once
 
 #include "turn.hpp"
+#include "square.hpp"
 
-struct Position
+class Position
 {   
+protected:
+
     bool whiteSquares[100];
     bool blackSquares[100];
+            
+public:
+
     Turn turn;
-        
+
     Position()
     {   
         //init with false everywhere
@@ -53,9 +59,31 @@ struct Position
         }
     }
 
-    bool isEmpty(int square) const
+    bool isWhite(Square square) const
     {
-        return (!whiteSquares[square] and !blackSquares[square]);
+        return (whiteSquares[square.square_id]);
+    }
+    bool isBlack(Square square) const
+    {
+        return (blackSquares[square.square_id]);
+    }
+    bool isEmpty(Square square) const
+    {
+        return (!this->isWhite(square) and !this->isBlack(square));
+    }
+
+    void setWhite(Square square) 
+    {
+        whiteSquares[square.square_id] = true;
+    }
+    void setBlack(Square square)
+    {
+        blackSquares[square.square_id] = true;
+    }
+    void setEmpty(Square square)
+    {
+        whiteSquares[square.square_id] = false;
+        blackSquares[square.square_id] = false;
     }
     
 };

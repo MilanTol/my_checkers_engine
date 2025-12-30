@@ -1,0 +1,217 @@
+#pragma once
+
+#include <vector>
+#include <iostream>
+
+#include "../square.hpp"
+#include "../position.hpp"
+
+struct LegalMovesFromSquare
+{   
+    Square square;
+    bool moveRight = false;
+    bool moveLeft = false;
+    bool captureUpRight = false;
+    bool captureUpLeft = false;
+    bool captureDownRight = false;
+    bool captureDownLeft = false;
+
+    LegalMovesFromSquare(const Square& square_init, const Position& position):
+        square(square_init)
+    {   
+        
+        if (!hasTurn(position)){return;}
+
+        checkCaptureUpRight(position);
+        checkCaptureDownRight(position);
+        checkCaptureDownLeft(position);
+        checkCaptureUpLeft(position);
+        
+        if (captureUpRight){return;}
+        if (captureUpLeft){return;}
+        if (captureDownRight){return;}
+        if (captureDownLeft){return;}
+
+        checkMoveLeft(position);
+        checkMoveRight(position);
+    }
+
+    std::vector<Square> legalSquares(Position& position) const
+    {
+        //returns a vector of squares (ints) to which a piece can legally move.
+        std::vector<Square> result;
+
+        if (moveRight and position.turn.forWhite())
+            result.push_back(square.upRight());
+        if (moveRight and position.turn.forBlack())
+            result.push_back(square.downRight());
+        if (moveLeft and position.turn.forWhite())
+            result.push_back(square.upLeft());
+        if (moveLeft and position.turn.forBlack())
+            result.push_back(square.downLeft());
+        if (captureUpRight)
+            result.push_back(square.upRight(2));
+        if (captureDownLeft)
+            result.push_back(square.downLeft(2));
+        if (captureDownRight)
+            result.push_back(square.downRight(2));
+        if (captureUpLeft)
+            result.push_back(square.upLeft(2));
+        
+        return result;
+    }
+
+    bool hasTurn(const Position& position) const
+    {
+        if (position.turn.forWhite() and position.isWhite(square)) 
+            return true;
+        if (position.turn.forBlack() and position.isBlack(square))
+            return true;
+        
+        return false;
+    }
+    
+    void checkCaptureUpRight(const Position& position)
+    {
+        if 
+        (               
+            position.turn.forWhite() and
+            position.isBlack(square.upRight()) and
+            position.isEmpty(square.upRight(2)) and
+            (square.getRow() > 1) and
+            (square.getColumn() > 1)
+        )
+        {
+            captureUpRight = true;
+        }
+        if 
+        (
+            position.turn.forBlack() and
+            position.isWhite(square.upRight()) and
+            position.isEmpty(square.upRight(2)) and
+            (square.getRow() > 1) and
+            (square.getColumn() < 8)        
+        )
+        {
+            captureUpRight = true;
+        }      
+    }
+    
+    void checkCaptureDownRight(const Position& position)
+    {
+        if 
+        (               
+            position.turn.forWhite() and
+            position.isBlack(square.downRight()) and
+            position.isEmpty(square.downRight(2)) and
+            (square.getRow() < 8) and
+            (square.getColumn() < 8)
+        )
+        {
+            captureDownRight = true;
+        }
+        if 
+        (
+            position.turn.forBlack() and
+            position.isWhite(square.downRight()) and
+            position.isEmpty(square.downRight(2)) and
+            (square.getRow() < 8) and
+            (square.getColumn() < 8)        
+        )
+        {
+            captureDownRight = true;
+        }           
+    }
+
+    void checkCaptureDownLeft(const Position& position)
+    {
+        if 
+        (               
+            position.turn.forWhite() and
+            position.isBlack(square.downLeft()) and
+            position.isEmpty(square.downLeft(2)) and
+            (square.getRow() < 8) and
+            (square.getColumn() > 1)
+        )
+        {captureDownLeft = true;}
+            
+        if 
+        (
+            position.turn.forBlack() and
+            position.isWhite(square.downLeft()) and
+            position.isEmpty(square.downLeft(2)) and
+            (square.getRow() < 8) and
+            (square.getColumn() > 1)        
+        )
+        {captureDownLeft = true;}                   
+    }
+
+    void checkCaptureUpLeft(const Position& position)
+    {   
+        if 
+        (               
+            position.turn.forWhite() and
+            position.isBlack(square.upLeft()) and
+            position.isEmpty(square.upLeft(2)) and
+            (square.getRow() > 1) and
+            (square.getColumn() > 1)
+        )
+        {
+            captureUpLeft = true;
+        }
+        if 
+        (
+            position.turn.forBlack() and
+            position.isWhite(square.upLeft()) and
+            position.isEmpty(square.upLeft(2)) and
+            (square.getRow() > 1) and
+            (square.getColumn() > 1)        
+        )
+        {
+            captureUpLeft = true;
+        }       
+    }
+
+    void checkMoveRight(const Position& position)
+    {
+        if
+        (
+            position.turn.forWhite() and
+            position.isEmpty(square.upRight()) and
+            (square.getRow()>0) and
+            (square.getColumn()<9)
+        )
+        {moveRight = true;}
+        if
+        (
+            position.turn.forBlack() and
+            position.isEmpty(square.downRight()) and
+            (square.getRow()<9) and
+            (square.getColumn()<9)
+        )
+        {moveRight = true;}
+
+    }
+
+    void checkMoveLeft(const Position& position)
+    {
+        if
+        (
+            position.turn.forWhite() and
+            position.isEmpty(square.upLeft()) and
+            (square.getRow()>0) and
+            (square.getColumn()>0)
+        )
+        {moveLeft = true;}
+        if
+        (
+            position.turn.forBlack() and
+            position.isEmpty(square.downLeft()) and
+            (square.getRow()<9) and
+            (square.getColumn()>0)
+        )
+        {moveLeft = true;}
+
+    }
+
+};
