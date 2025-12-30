@@ -13,6 +13,7 @@
 
 #include "graphics/draw_board.hpp"
 #include "graphics/draw_checkers.hpp"
+#include "graphics/draw_kings.hpp"
 
 Square positionToSquare(sf::Vector2i position)
 {
@@ -66,6 +67,7 @@ int main()
 
         drawBoard(window);
         drawCheckers(window, position);
+        drawKings(window, position);
 
         window.display();
     }

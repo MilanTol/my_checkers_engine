@@ -48,6 +48,7 @@ void drawCheckers(sf::RenderWindow& window, Position position)
             drawBlackChecker(window, i);
         }
     }
-    
 }
+
+
 
