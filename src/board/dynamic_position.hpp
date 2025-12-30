@@ -21,59 +21,21 @@ public:
             blackSquares[i] = input_position.isBlack(Square(i));
         }
     }
-
-    void moveRight(Square origin)
-    {
-        if (this->isWhite(origin))
-        {
-            this->setEmpty(origin);
-            this->setWhite(origin.upRight());
-            turn.end();
-        }
-        if (this->isBlack(origin))
-        {
-            this->setEmpty(origin);
-            this->setBlack(origin.downRight());
-            turn.end();
-        }
-    }
-
-    void moveLeft(Square origin)
-    {   
-        if (this->isWhite(origin))
-        {   
-            this->setEmpty(origin);
-            this->setWhite(origin.upLeft());
-            turn.end();
-        }
-        if (this->isBlack(origin))
-        {
-            this->setEmpty(origin);
-            this->setBlack(origin.downLeft());
-            turn.end();
-        }
-    }
  
     void execute_move(Move move)
-    {
-        LegalMovesFromSquare legal_moves = LegalMovesFromSquare(move.origin, *this);
-        
-        
-        if (legal_moves.moveLeft && move.origin.upLeft().square_id == move.destination.square_id)
+    {   
+        if (this->turn.forWhite())
         {
-            moveLeft(move.origin);
+            this->setEmpty(move.origin);
+            this->setWhite(move.destination);
+            this->turn.end();
         }
-        if (legal_moves.moveLeft && move.origin.downLeft().square_id == move.destination.square_id)
+        else if (this->turn.forBlack())
         {
-            moveLeft(move.origin);
+            this->setEmpty(move.origin);
+            this->setBlack(move.destination);
+            this->turn.end();
         }
-        if (legal_moves.moveRight && move.origin.upRight().square_id == move.destination.square_id)
-        {
-            moveRight(move.origin);
-        }
-        if (legal_moves.moveRight && move.origin.downRight().square_id == move.destination.square_id)
-        {
-            moveRight(move.origin);
-        }  
-    }
+
+    };
 };
