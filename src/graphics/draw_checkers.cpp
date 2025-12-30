@@ -1,5 +1,5 @@
 #include "../config.hpp"
-#include "../position.hpp"
+#include "../board/position.hpp"
 
 void drawWhiteChecker(sf::RenderWindow& window, int square)
 {

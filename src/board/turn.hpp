@@ -4,11 +4,11 @@ struct Turn
 {
     int turn=1; //white starts
 
-    bool forWhite()
+    bool forWhite() const
     {
         return (turn == 1);
     }
-    bool forBlack()
+    bool forBlack() const
     {
         return (turn == 0);
     }

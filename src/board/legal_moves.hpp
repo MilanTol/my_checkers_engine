@@ -16,9 +16,9 @@ struct LegalMoves
     bool captureDownRight = false;
     bool captureDownLeft = false;
 
-    LegalMoves(int origin, Position& position)
+    LegalMoves(int origin, const Position& position)
     {
-        if (!checkTurn(origin, position)){return;}
+        if (!hasTurn(origin, position)){return;}
 
         checkCaptureUpRight(origin, position);
         checkCaptureUpLeft(origin, position);
@@ -33,8 +33,9 @@ struct LegalMoves
         checkMoveRight(origin, position);
     }
 
-    std::vector<int> legalSquares(int origin, Position& position)
+    std::vector<int> legalSquares(int origin, Position& position) const
     {
+        //returns a vector of squares (ints) to which a piece can legally move.
         std::vector<int> result;
 
         if (moveRight and position.turn.forWhite())
@@ -57,7 +58,7 @@ struct LegalMoves
         return result;
     }
 
-    bool checkTurn(int origin, Position& position)
+    bool hasTurn(int origin, const Position& position) const
     {
         if (position.turn.forWhite() and position.whiteSquares[origin]) 
             return true;
@@ -67,7 +68,7 @@ struct LegalMoves
         return false;
     }
 
-    void checkCaptureUpLeft(int origin, Position& position)
+    void checkCaptureUpLeft(int origin, const Position& position)
     {   
         if 
         (               
@@ -93,7 +94,7 @@ struct LegalMoves
         }       
     }
 
-    void checkCaptureUpRight(int origin, Position& position)
+    void checkCaptureUpRight(int origin, const Position& position)
     {
         if 
         (               
@@ -119,7 +120,7 @@ struct LegalMoves
         }      
     }
 
-    void checkCaptureDownRight(int origin, Position& position)
+    void checkCaptureDownRight(int origin, const Position& position)
     {
         if 
         (               
@@ -145,7 +146,7 @@ struct LegalMoves
         }           
     }
 
-    void checkCaptureDownLeft(int origin, Position& position)
+    void checkCaptureDownLeft(int origin, const Position& position)
 {
     if 
     (               
@@ -168,7 +169,7 @@ struct LegalMoves
     {captureDownLeft = true;}                   
 }
 
-    void checkMoveRight(int origin, Position& position)
+    void checkMoveRight(int origin, const Position& position)
     {
         if
         (
@@ -189,7 +190,7 @@ struct LegalMoves
 
     }
 
-    void checkMoveLeft(int origin, Position& position)
+    void checkMoveLeft(int origin, const Position& position)
     {
         if
         (

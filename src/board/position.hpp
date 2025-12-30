@@ -7,8 +7,7 @@ struct Position
     bool whiteSquares[100];
     bool blackSquares[100];
     Turn turn;
-    
-    
+        
     Position()
     {   
         //init with false everywhere
@@ -45,16 +44,16 @@ struct Position
         }
     }
 
-    Position(bool whiteSquares_input[100], bool blackSquares_input[100], Turn t)
-        : turn(t)
+    Position(bool whiteSquares_init[100], bool blackSquares_init[100], Turn turn_init)
+        : turn(turn_init)
     {
         for (int i = 0; i < 100; i++) {
-            whiteSquares[i] = whiteSquares_input[i];
-            blackSquares[i] = blackSquares_input[i];
+            whiteSquares[i] = whiteSquares_init[i];
+            blackSquares[i] = blackSquares_init[i];
         }
     }
 
-    bool isEmpty(int square)
+    bool isEmpty(int square) const
     {
         return (!whiteSquares[square] and !blackSquares[square]);
     }

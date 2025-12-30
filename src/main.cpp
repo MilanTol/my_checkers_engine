@@ -1,15 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-#include "events.hpp"
-#include "input.hpp"
+#include "user_interface/events.hpp"
+#include "user_interface/input.hpp"
 
 #include "config.hpp"
 
-#include "square.hpp"
-#include "position.hpp"
-#include "dynamic_position.hpp"
-#include "legal_moves.hpp"
+#include "board/square.hpp"
+#include "board/position.hpp"
+#include "board/dynamic_position.hpp"
+#include "board/legal_moves.hpp"
 
 #include "graphics/draw_board.hpp"
 #include "graphics/draw_checkers.hpp"

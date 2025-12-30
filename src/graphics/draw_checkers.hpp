@@ -1,5 +1,5 @@
 #pragma once
 
-#include "../position.hpp"
+#include "../board/position.hpp"
 
 void drawCheckers(sf::RenderWindow&, Position);

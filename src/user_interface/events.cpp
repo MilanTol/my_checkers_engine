@@ -1,10 +1,11 @@
 #include <SFML/Graphics.hpp>
+#include <optional>
 
 #include "input.hpp"
 
 void processEvents(sf::Window& window, Input& input)
 {
-    while (const std::optional event = window.pollEvent())
+    while (const std::optional<sf::Event> event = window.pollEvent())
     {
         if (event->is<sf::Event::Closed>())
         {
