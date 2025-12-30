@@ -9,6 +9,8 @@ protected:
 
     bool whiteSquares[100];
     bool blackSquares[100];
+    bool whiteKings[100];
+    bool blackKings[100];
             
 public:
 
@@ -71,7 +73,14 @@ public:
     {
         return (!this->isWhite(square) and !this->isBlack(square));
     }
-
+    bool isWhiteKing(Square square) const
+    {
+        return whiteKings[square.square_id];
+    }
+    bool isBlackKing(Square square) const
+    {
+        return blackKings[square.square_id];
+    }
     void setWhite(Square square) 
     {
         whiteSquares[square.square_id] = true;
@@ -85,5 +94,14 @@ public:
         whiteSquares[square.square_id] = false;
         blackSquares[square.square_id] = false;
     }
-    
+    void setWhiteKing(Square square)
+    {
+        whiteKings[square.square_id] = true;
+    }    
+    void setBlackKing(Square square)
+    {
+        blackKings[square.square_id] = true;
+    }    
+
+
 };
