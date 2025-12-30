@@ -5,19 +5,14 @@
 
 #include "../square.hpp"
 #include "../position.hpp"
+#include "../move.hpp"
+#include "../capture.hpp"
 
 struct LegalMovesFromSquare
 {   
     Square square;
-
-    bool captureUpRight = false;
-    bool captureUpLeft = false;
-    bool captureDownRight = false;
-    bool captureDownLeft = false;
-    bool capture;
-
-    bool moveRight = false;
-    bool moveLeft = false;
+    std::vector<Move> legalMoves;
+    bool capturePossible = false;
 
     LegalMovesFromSquare(const Square& square_init, const Position& position):
         square(square_init)
@@ -30,13 +25,9 @@ struct LegalMovesFromSquare
         checkCaptureDownLeft(position);
         checkCaptureUpLeft(position);
         
-        capture = (captureUpRight && captureUpLeft && captureDownLeft && capture&&captureDownRight);
-
-        if (captureUpRight){return;}
-        if (captureUpLeft){return;}
-        if (captureDownRight){return;}
-        if (captureDownLeft){return;}
-
+        if (capturePossible)
+            return;
+            
         checkMoveLeft(position);
         checkMoveRight(position);
     }
@@ -91,7 +82,7 @@ struct LegalMovesFromSquare
             (square.getColumn() > 1)
         )
         {
-            captureUpRight = true;
+            legalMoves.push_back(Capture(square, square.upRight(2), ));
         }
         if 
         (
