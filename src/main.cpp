@@ -5,9 +5,8 @@
 #include "input.hpp"
 
 #include "config.hpp"
-#include "checker.hpp"
-#include "square.hpp"
 
+#include "square.hpp"
 #include "position.hpp"
 #include "dynamic_position.hpp"
 #include "legal_moves.hpp"
@@ -25,8 +24,7 @@ int positionToSquare(sf::Vector2i position)
 Input input;
 int clicked_square = -1;
 
-Position position = Position();
-DynamicPosition dynamic_position = DynamicPosition(position);
+DynamicPosition position = DynamicPosition(Position());
 
 int main()
 {
@@ -46,9 +44,8 @@ int main()
         {   
             int released_square = positionToSquare(sf::Mouse::getPosition(window));
 
-            dynamic_position.move(clicked_square, released_square);
-            position = dynamic_position.position;
-            
+            position.move(clicked_square, released_square);
+                        
             clicked_square = -1;
             input.mouseClicked = false;
             input.mouseReleased = false;

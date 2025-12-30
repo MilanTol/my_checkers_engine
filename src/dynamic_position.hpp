@@ -1,30 +1,19 @@
 #pragma once
 
-#include "checker.hpp"
 #include "turn.hpp"
 #include "square.hpp"
+#include "position.hpp"
 #include "legal_moves.hpp"
 
-struct DynamicPosition
+struct DynamicPosition : public Position
 {   
-    Position position;
-    bool whiteSquares[100];
-    bool blackSquares[100];
-    Turn turn;
-    
     // constructor: copy arrays from Position
-    DynamicPosition(const Position& pos)
-        : position(pos), turn(pos.turn)
+    DynamicPosition(const Position& input_position)
     {
         for (int i = 0; i < 100; i++) {
-            whiteSquares[i] = pos.whiteSquares[i];
-            blackSquares[i] = pos.blackSquares[i];
+            whiteSquares[i] = input_position.whiteSquares[i];
+            blackSquares[i] = input_position.blackSquares[i];
         }
-    }
-
-    void updatePosition()
-    {
-        position = Position(whiteSquares, blackSquares, turn);
     }
 
     void moveRight(int origin)
@@ -61,7 +50,7 @@ struct DynamicPosition
  
     void move(int origin, int destination)
     {
-        LegalMoves legal_moves = LegalMoves(origin, position);
+        LegalMoves legal_moves = LegalMoves(origin, *this);
         
         if (legal_moves.moveLeft && Square(origin).upLeft() == destination)
         {
@@ -79,7 +68,5 @@ struct DynamicPosition
         {
             moveRight(origin);
         }  
-
-        updatePosition();
     }
 };

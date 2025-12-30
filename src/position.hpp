@@ -1,8 +1,6 @@
 #pragma once
 
-#include "checker.hpp"
 #include "turn.hpp"
-#include "square.hpp"
 
 struct Position
 {   
