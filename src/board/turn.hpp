@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 struct Turn
 {
     int turn=1; //white starts

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "move.hpp"
-#include "legal_moves_from_square.hpp"
+#include "legal_checker_moves.hpp"
+#include "legal_king_moves.hpp"
 
 struct LegalMoves 
 {
@@ -12,9 +13,16 @@ struct LegalMoves
     {
         for (int i=0; i<100; i++)
         {
-        LegalMovesFromSquare legal_moves_from_square = LegalMovesFromSquare(Square(i), position);
-            moves.push_back(legal_moves_from_square.moves);
-            if (legal_moves_from_square.capturePossible)
+        LegalCheckerMoves legal_checker_moves = LegalCheckerMoves(Square(i), position);
+            moves.push_back(legal_checker_moves.moves);
+            if (legal_checker_moves.capturePossible)
+            {
+                capturePossible = true;
+            }
+
+        LegalKingMoves legal_king_moves = LegalKingMoves(Square(i), position);
+            moves.push_back(legal_king_moves.moves);
+            if (legal_king_moves.capturePossible)
             {
                 capturePossible = true;
             }

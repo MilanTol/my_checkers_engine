@@ -5,8 +5,8 @@
 #include "position.hpp"
 
 #include "moves/move.hpp"
-#include "moves/legal_moves.hpp"
-#include "moves/legal_moves_from_square.hpp"
+#include "moves/legal_checker_moves.hpp"
+#include "moves/legal_king_moves.hpp"
 
 class DynamicPosition : public Position
 {   
@@ -17,8 +17,8 @@ public:
     DynamicPosition(const Position& input_position)
     {
         for (int i = 0; i < 100; i++) {
-            whiteSquares[i] = input_position.isWhite(Square(i));
-            blackSquares[i] = input_position.isBlack(Square(i));
+            whiteCheckers[i] = input_position.isWhiteChecker(Square(i));
+            blackCheckers[i] = input_position.isBlackChecker(Square(i));
         }
     }
  
@@ -26,8 +26,16 @@ public:
     {   
         if (this->turn.forWhite())
         {
+            if (this->isWhite(move.origin))
+            {
+                this->setWhiteChecker(move.destination);
+            }
+            if (this->isWhiteKing(move.origin))
+            {
+                this->setWhiteKing(move.destination);
+            }
+
             this->setEmpty(move.origin);
-            this->setWhite(move.destination);
             this->setEmpty(move.captured);
 
             if (move.destination.getRow() == 0)
@@ -38,19 +46,30 @@ public:
 
             if (move.isCapture())
             {
-                if (LegalMovesFromSquare(move.destination, *this).capturePossible)
+                if (
+                    LegalCheckerMoves(move.destination, *this).capturePossible or
+                    LegalKingMoves(move.destination, *this).capturePossible
+                    )
                 {
                     return;
                 }
             }
-
+            std::cout<<"turn for black"<<std::endl;
             this->turn.end();
         }
 
         else if (this->turn.forBlack())
-        {
+        {   
+            if (this->isBlack(move.origin))
+            {
+                this->setBlackChecker(move.destination);
+            }
+            if (this->isBlackKing(move.origin))
+            {
+                this->setBlackKing(move.destination);
+            }
+
             this->setEmpty(move.origin);
-            this->setBlack(move.destination);
             this->setEmpty(move.captured);
 
             if (move.destination.getRow() == 9)
@@ -61,12 +80,15 @@ public:
 
             if (move.isCapture())
             {
-                if (LegalMovesFromSquare(move.destination, *this).capturePossible)
+                if (
+                    LegalCheckerMoves(move.destination, *this).capturePossible or
+                    LegalKingMoves(move.destination, *this).capturePossible
+                    )
                 {
                     return;
                 }
             }  
-
+            std::cout<<"turn for white"<<std::endl;
             this->turn.end();
         }
 

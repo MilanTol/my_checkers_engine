@@ -7,15 +7,15 @@
 #include "../position.hpp"
 #include "move.hpp"
 
-struct LegalMovesFromSquare
+struct LegalCheckerMoves
 {   
     Square square;
     std::vector<Move> moves;
     bool capturePossible = false;
 
-    LegalMovesFromSquare(const Square& square_init, const Position& position):
+    LegalCheckerMoves(const Square& square_init, const Position& position):
         square(square_init)
-    {           
+    {    
         if (!squareHasTurn(position)){return;}
         
         checkCaptureUpRight(position);

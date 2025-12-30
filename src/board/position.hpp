@@ -7,8 +7,8 @@ class Position
 {   
 protected:
 
-    bool whiteSquares[100];
-    bool blackSquares[100];
+    bool whiteCheckers[100];
+    bool blackCheckers[100];
     bool whiteKings[100];
     bool blackKings[100];
             
@@ -21,12 +21,12 @@ public:
         //init with false everywhere
         for (int i=0; i<100; i++)
         {
-            whiteSquares[i] = false;
-            blackSquares[i] = false;
+            whiteCheckers[i] = false;
+            blackCheckers[i] = false;
         }
 
         //init black checkers
-        for (int i=0; i<20; i++)
+        for (int i=16; i<20; i++)
         {   
             int square = 1 + 2*i;
             int column = square % 10;
@@ -35,11 +35,11 @@ public:
             {
                 square -= 1; 
             }
-            blackSquares[square] = true;
+            blackCheckers[square] = true;
         }
 
         //init white checkers
-        for (int i=0; i<20; i++)
+        for (int i=16; i<20; i++)
         {   
             int square = 99 - 2*i;
             int column = square % 10;
@@ -48,7 +48,7 @@ public:
             {
                 square -= 1;
             }
-            whiteSquares[square] = true;
+            whiteCheckers[square] = true;
         }
     }
 
@@ -56,22 +56,26 @@ public:
         : turn(turn_init)
     {
         for (int i = 0; i < 100; i++) {
-            whiteSquares[i] = whiteSquares_init[i];
-            blackSquares[i] = blackSquares_init[i];
+            whiteCheckers[i] = whiteSquares_init[i];
+            blackCheckers[i] = blackSquares_init[i];
         }
     }
 
     bool isWhite(Square square) const
     {
-        return (whiteSquares[square.square_id]);
+        return (whiteCheckers[square.square_id] or whiteKings[square.square_id]);
     }
     bool isBlack(Square square) const
     {
-        return (blackSquares[square.square_id]);
+        return (blackCheckers[square.square_id] or blackKings[square.square_id]);
     }
-    bool isEmpty(Square square) const
+    bool isWhiteChecker(Square square) const
     {
-        return (!this->isWhite(square) and !this->isBlack(square));
+        return whiteCheckers[square.square_id];
+    }
+    bool isBlackChecker(Square square) const
+    {
+        return blackCheckers[square.square_id];
     }
     bool isWhiteKing(Square square) const
     {
@@ -81,19 +85,18 @@ public:
     {
         return blackKings[square.square_id];
     }
-    
-    void setWhite(Square square) 
+    bool isEmpty(Square square) const
     {
-        whiteSquares[square.square_id] = true;
+        return (!this->isWhite(square) and !this->isBlack(square) and !this->isWhiteKing(square) and !this->isBlackKing(square));
     }
-    void setBlack(Square square)
+
+    void setWhiteChecker(Square square) 
     {
-        blackSquares[square.square_id] = true;
+        whiteCheckers[square.square_id] = true;
     }
-    void setEmpty(Square square)
+    void setBlackChecker(Square square)
     {
-        whiteSquares[square.square_id] = false;
-        blackSquares[square.square_id] = false;
+        blackCheckers[square.square_id] = true;
     }
     void setWhiteKing(Square square)
     {
@@ -103,6 +106,12 @@ public:
     {
         blackKings[square.square_id] = true;
     }    
-
+    void setEmpty(Square square)
+    {
+        whiteCheckers[square.square_id] = false;
+        blackCheckers[square.square_id] = false;
+        whiteKings[square.square_id] = false;
+        blackKings[square.square_id] = false;
+    }
 
 };
