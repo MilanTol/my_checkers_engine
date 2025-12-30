@@ -1,11 +1,10 @@
 #pragma once
 
-
 #include <vector>
 #include <iostream>
 
-#include "square.hpp"
-#include "position.hpp"
+#include "../square.hpp"
+#include "../position.hpp"
 
 struct LegalMoves
 {

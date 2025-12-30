@@ -9,7 +9,7 @@
 #include "board/square.hpp"
 #include "board/position.hpp"
 #include "board/dynamic_position.hpp"
-#include "board/legal_moves.hpp"
+#include "board/moves/legal_moves.hpp"
 
 #include "graphics/draw_board.hpp"
 #include "graphics/draw_checkers.hpp"

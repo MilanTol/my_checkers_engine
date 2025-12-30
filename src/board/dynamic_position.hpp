@@ -3,7 +3,7 @@
 #include "turn.hpp"
 #include "square.hpp"
 #include "position.hpp"
-#include "legal_moves.hpp"
+#include "moves/legal_moves.hpp"
 
 struct DynamicPosition : public Position
 {   
