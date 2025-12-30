@@ -5,20 +5,18 @@
 
 #include "../square.hpp"
 #include "../position.hpp"
-#include "../move.hpp"
-#include "../capture.hpp"
+#include "move.hpp"
 
 struct LegalMovesFromSquare
 {   
     Square square;
-    std::vector<Move> legalMoves;
+    std::vector<Move> moves;
     bool capturePossible = false;
 
     LegalMovesFromSquare(const Square& square_init, const Position& position):
         square(square_init)
-    {   
-        
-        if (!hasTurn(position)){return;}
+    {           
+        if (!squareHasTurn(position)){return;}
 
         checkCaptureUpRight(position);
         checkCaptureDownRight(position);
@@ -32,36 +30,7 @@ struct LegalMovesFromSquare
         checkMoveRight(position);
     }
 
-    std::vector<Move> returnMoves(Position& position) const
-    {
-        //returns a vector of moves that are legal.
-        std::vector<Move> result;
-
-        if (captureUpRight)
-            result.push_back( Move(square, square.upRight(2)) );
-        if (captureDownLeft)
-            result.push_back( Move(square, square.downLeft(2)) );
-        if (captureDownRight)
-            result.push_back( Move(square, square.downRight(2)) );
-        if (captureUpLeft)
-            result.push_back( Move(square, square.upLeft(2)) );
-        
-        if (capture)
-            return result;
-
-        if (moveRight and position.turn.forWhite())
-            result.push_back( Move(square, square.upRight()) );
-        if (moveRight and position.turn.forBlack())
-            result.push_back( Move(square, square.downRight()) );
-        if (moveLeft and position.turn.forWhite())
-            result.push_back( Move(square, square.upLeft()) );
-        if (moveLeft and position.turn.forBlack())
-            result.push_back( Move(square, square.downLeft()) );
-            
-        return result;
-    }
-
-    bool hasTurn(const Position& position) const
+    bool squareHasTurn(const Position& position) const
     {
         if (position.turn.forWhite() and position.isWhite(square)) 
             return true;
@@ -82,7 +51,7 @@ struct LegalMovesFromSquare
             (square.getColumn() > 1)
         )
         {
-            legalMoves.push_back(Capture(square, square.upRight(2), ));
+            moves.push_back(Move(square, square.upRight(2), square.upRight()));
         }
         if 
         (
@@ -93,7 +62,7 @@ struct LegalMovesFromSquare
             (square.getColumn() < 8)        
         )
         {
-            captureUpRight = true;
+            moves.push_back(Move(square, square.upRight(2), square.upRight()));
         }      
     }
     
@@ -108,7 +77,7 @@ struct LegalMovesFromSquare
             (square.getColumn() < 8)
         )
         {
-            captureDownRight = true;
+            moves.push_back(Move(square, square.downRight(2), square.downRight()));
         }
         if 
         (
@@ -119,7 +88,7 @@ struct LegalMovesFromSquare
             (square.getColumn() < 8)        
         )
         {
-            captureDownRight = true;
+            moves.push_back(Move(square, square.downRight(2), square.downRight()));
         }           
     }
 
@@ -133,7 +102,9 @@ struct LegalMovesFromSquare
             (square.getRow() < 8) and
             (square.getColumn() > 1)
         )
-        {captureDownLeft = true;}
+        {
+            moves.push_back(Move(square, square.downLeft(2), square.downLeft()));
+        }
             
         if 
         (
@@ -143,7 +114,9 @@ struct LegalMovesFromSquare
             (square.getRow() < 8) and
             (square.getColumn() > 1)        
         )
-        {captureDownLeft = true;}                   
+        {
+            moves.push_back(Move(square, square.downLeft(2), square.downLeft()));
+        }                   
     }
 
     void checkCaptureUpLeft(const Position& position)
@@ -157,7 +130,7 @@ struct LegalMovesFromSquare
             (square.getColumn() > 1)
         )
         {
-            captureUpLeft = true;
+            moves.push_back(Move(square, square.upLeft(2), square.upLeft()));
         }
         if 
         (
@@ -168,7 +141,7 @@ struct LegalMovesFromSquare
             (square.getColumn() > 1)        
         )
         {
-            captureUpLeft = true;
+            moves.push_back(Move(square, square.upLeft(2), square.upLeft()));
         }       
     }
 
@@ -181,7 +154,9 @@ struct LegalMovesFromSquare
             (square.getRow()>0) and
             (square.getColumn()<9)
         )
-        {moveRight = true;}
+        {
+            moves.push_back(Move(square, square.upRight()));
+        }
         if
         (
             position.turn.forBlack() and
@@ -189,7 +164,9 @@ struct LegalMovesFromSquare
             (square.getRow()<9) and
             (square.getColumn()<9)
         )
-        {moveRight = true;}
+        {
+            moves.push_back(Move(square, square.downRight()));
+        }
 
     }
 
@@ -202,7 +179,9 @@ struct LegalMovesFromSquare
             (square.getRow()>0) and
             (square.getColumn()>0)
         )
-        {moveLeft = true;}
+        {
+            moves.push_back(Move(square, square.upLeft()));
+        }
         if
         (
             position.turn.forBlack() and
@@ -210,7 +189,9 @@ struct LegalMovesFromSquare
             (square.getRow()<9) and
             (square.getColumn()>0)
         )
-        {moveLeft = true;}
+        {
+            moves.push_back(Move(square, square.downLeft()));
+        }
 
     }
 

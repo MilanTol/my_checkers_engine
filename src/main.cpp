@@ -45,10 +45,10 @@ int main()
             Square released_square = positionToSquare(sf::Mouse::getPosition(window));
             Move suggested_move = Move(clicked_square, released_square);
 
-            LegalMovesFromSquare legal_moves_from_square_obj = LegalMovesFromSquare(clicked_square, position);
-            std::vector<Move> legal_moves_from_square = legal_moves_from_square_obj.returnMoves(position);
+            LegalMovesFromSquare legal_moves_from_squares = LegalMovesFromSquare(clicked_square, position);
+            std::vector<Move> moves = legal_moves_from_squares.moves;
 
-            for (Move move : legal_moves_from_square)
+            for (Move move : moves)
             {
                 if (suggested_move == move)
                     position.execute_move(move);

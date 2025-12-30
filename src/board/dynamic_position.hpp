@@ -28,12 +28,14 @@ public:
         {
             this->setEmpty(move.origin);
             this->setWhite(move.destination);
+            this->setEmpty(move.captured);
             this->turn.end();
         }
         else if (this->turn.forBlack())
         {
             this->setEmpty(move.origin);
             this->setBlack(move.destination);
+            this->setEmpty(move.captured);
             this->turn.end();
         }
 
