@@ -17,7 +17,7 @@ struct LegalMovesFromSquare
         square(square_init)
     {           
         if (!squareHasTurn(position)){return;}
-
+        
         checkCaptureUpRight(position);
         checkCaptureDownRight(position);
         checkCaptureDownLeft(position);
@@ -48,11 +48,11 @@ struct LegalMovesFromSquare
             position.isBlack(square.upRight()) and
             position.isEmpty(square.upRight(2)) and
             (square.getRow() > 1) and
-            (square.getColumn() > 1)
+            (square.getColumn() < 8)
         )
         {
             moves.push_back(Move(square, square.upRight(2), square.upRight()));
-            std::cout << square.upRight().square_id << std::endl;
+            capturePossible = true;
         }
         if 
         (

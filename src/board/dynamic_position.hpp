@@ -29,6 +29,13 @@ public:
             this->setEmpty(move.origin);
             this->setWhite(move.destination);
             this->setEmpty(move.captured);
+            if (move.isCapture())
+            {
+                if (LegalMovesFromSquare(move.destination, *this).capturePossible)
+                {
+                    return;
+                }
+            }
             this->turn.end();
         }
         else if (this->turn.forBlack())
@@ -36,6 +43,13 @@ public:
             this->setEmpty(move.origin);
             this->setBlack(move.destination);
             this->setEmpty(move.captured);
+            if (move.isCapture())
+            {
+                if (LegalMovesFromSquare(move.destination, *this).capturePossible)
+                {
+                    return;
+                }
+            }  
             this->turn.end();
         }
 

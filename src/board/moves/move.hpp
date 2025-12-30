@@ -25,6 +25,6 @@ struct Move
 
     bool isCapture() const
     {   
-        return !(origin.square_id == captured.square_id);
+        return origin.square_id != captured.square_id;
     }
 };

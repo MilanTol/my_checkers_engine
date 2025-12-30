@@ -48,8 +48,6 @@ int main()
             LegalMovesFromSquare legal_moves_from_squares = LegalMovesFromSquare(clicked_square, position);
             std::vector<Move> moves = legal_moves_from_squares.moves;
             LegalMoves legal_moves = LegalMoves(position);
-            std::cout << legal_moves.capturePossible << std::endl;
-            
 
             for (Move move : moves)
             {
