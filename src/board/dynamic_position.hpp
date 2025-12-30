@@ -30,7 +30,7 @@ public:
             {
                 this->setWhiteChecker(move.destination);
             }
-            if (this->isWhiteKing(move.origin))
+            else if (this->isWhiteKing(move.origin))
             {
                 this->setWhiteKing(move.destination);
             }
@@ -64,7 +64,7 @@ public:
             {
                 this->setBlackChecker(move.destination);
             }
-            if (this->isBlackKing(move.origin))
+            else if (this->isBlackKing(move.origin))
             {
                 this->setBlackKing(move.destination);
             }
