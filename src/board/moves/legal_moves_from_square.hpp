@@ -41,9 +41,9 @@ struct LegalMovesFromSquare
         checkMoveRight(position);
     }
 
-    std::vector<Move> legalMoves(Position& position) const
+    std::vector<Move> returnMoves(Position& position) const
     {
-        //returns a vector of squares (ints) to which a piece can legally move.
+        //returns a vector of moves that are legal.
         std::vector<Move> result;
 
         if (captureUpRight)
@@ -56,7 +56,7 @@ struct LegalMovesFromSquare
             result.push_back( Move(square, square.upLeft(2)) );
         
         if (capture)
-            return;
+            return result;
 
         if (moveRight and position.turn.forWhite())
             result.push_back( Move(square, square.upRight()) );

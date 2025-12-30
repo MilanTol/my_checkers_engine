@@ -14,15 +14,15 @@
 #include "graphics/draw_board.hpp"
 #include "graphics/draw_checkers.hpp"
 
-int positionToSquare(sf::Vector2i position)
+Square positionToSquare(sf::Vector2i position)
 {
     int column = static_cast<int>( position.x / (cfg::window_size.x/10) ); //this rounds down in c++
     int row = static_cast<int>( position.y / (cfg::window_size.y/10) );
-    return 10*row + column;
+    return Square(10*row + column);
 }
 
 Input input;
-int clicked_square = -1;
+Square clicked_square = Square(-1);
 
 DynamicPosition position = DynamicPosition(Position());
 
@@ -35,17 +35,25 @@ int main()
     {   
         processEvents(window, input);
         
-        if (input.mouseClicked and clicked_square == -1) // if clicked
+        if (input.mouseClicked and clicked_square.square_id == -1) // if clicked
         {   
             clicked_square = positionToSquare(sf::Mouse::getPosition(window));
         }
 
-        if (input.mouseReleased and clicked_square != -1) //if released
+        if (input.mouseReleased and clicked_square.square_id != -1) //if released
         {   
-            int released_square = positionToSquare(sf::Mouse::getPosition(window));
+            Square released_square = positionToSquare(sf::Mouse::getPosition(window));
+            Move suggested_move = Move(clicked_square, released_square);
 
-            position.move(clicked_square, released_square);
-                        
+            LegalMovesFromSquare legal_moves_from_square_obj = LegalMovesFromSquare(clicked_square, position);
+            std::vector<Move> legal_moves_from_square = legal_moves_from_square_obj.returnMoves(position);
+
+            for (Move move : legal_moves_from_square)
+            {
+                if (suggested_move == move)
+                    position.execute_move(move);
+            }
+                                    
             clicked_square = -1;
             input.mouseClicked = false;
             input.mouseReleased = false;
