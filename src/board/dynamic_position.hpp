@@ -3,6 +3,9 @@
 #include "turn.hpp"
 #include "square.hpp"
 #include "position.hpp"
+
+#include "moves/move.hpp"
+#include "moves/legal_moves.hpp"
 #include "moves/legal_moves_from_square.hpp"
 
 class DynamicPosition : public Position
@@ -51,25 +54,26 @@ public:
         }
     }
  
-    void move(Square origin, Square destination)
+    void execute_move(Move move)
     {
-        LegalMovesFromSquare legal_moves = LegalMovesFromSquare(origin, *this);
+        LegalMovesFromSquare legal_moves = LegalMovesFromSquare(move.origin, *this);
         
-        if (legal_moves.moveLeft && origin.upLeft().square_id == destination.square_id)
+        
+        if (legal_moves.moveLeft && move.origin.upLeft().square_id == move.destination.square_id)
         {
-            moveLeft(origin);
+            moveLeft(move.origin);
         }
-        if (legal_moves.moveLeft && origin.downLeft().square_id == destination.square_id)
+        if (legal_moves.moveLeft && move.origin.downLeft().square_id == move.destination.square_id)
         {
-            moveLeft(origin);
+            moveLeft(move.origin);
         }
-        if (legal_moves.moveRight && origin.upRight().square_id == destination.square_id)
+        if (legal_moves.moveRight && move.origin.upRight().square_id == move.destination.square_id)
         {
-            moveRight(origin);
+            moveRight(move.origin);
         }
-        if (legal_moves.moveRight && origin.downRight().square_id == destination.square_id)
+        if (legal_moves.moveRight && move.origin.downRight().square_id == move.destination.square_id)
         {
-            moveRight(origin);
+            moveRight(move.origin);
         }  
     }
 };

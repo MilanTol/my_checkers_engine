@@ -9,12 +9,15 @@
 struct LegalMovesFromSquare
 {   
     Square square;
-    bool moveRight = false;
-    bool moveLeft = false;
+
     bool captureUpRight = false;
     bool captureUpLeft = false;
     bool captureDownRight = false;
     bool captureDownLeft = false;
+    bool capture;
+
+    bool moveRight = false;
+    bool moveLeft = false;
 
     LegalMovesFromSquare(const Square& square_init, const Position& position):
         square(square_init)
@@ -27,6 +30,8 @@ struct LegalMovesFromSquare
         checkCaptureDownLeft(position);
         checkCaptureUpLeft(position);
         
+        capture = (captureUpRight && captureUpLeft && captureDownLeft && capture&&captureDownRight);
+
         if (captureUpRight){return;}
         if (captureUpLeft){return;}
         if (captureDownRight){return;}
@@ -36,28 +41,32 @@ struct LegalMovesFromSquare
         checkMoveRight(position);
     }
 
-    std::vector<Square> legalSquares(Position& position) const
+    std::vector<Move> legalMoves(Position& position) const
     {
         //returns a vector of squares (ints) to which a piece can legally move.
-        std::vector<Square> result;
+        std::vector<Move> result;
+
+        if (captureUpRight)
+            result.push_back( Move(square, square.upRight(2)) );
+        if (captureDownLeft)
+            result.push_back( Move(square, square.downLeft(2)) );
+        if (captureDownRight)
+            result.push_back( Move(square, square.downRight(2)) );
+        if (captureUpLeft)
+            result.push_back( Move(square, square.upLeft(2)) );
+        
+        if (capture)
+            return;
 
         if (moveRight and position.turn.forWhite())
-            result.push_back(square.upRight());
+            result.push_back( Move(square, square.upRight()) );
         if (moveRight and position.turn.forBlack())
-            result.push_back(square.downRight());
+            result.push_back( Move(square, square.downRight()) );
         if (moveLeft and position.turn.forWhite())
-            result.push_back(square.upLeft());
+            result.push_back( Move(square, square.upLeft()) );
         if (moveLeft and position.turn.forBlack())
-            result.push_back(square.downLeft());
-        if (captureUpRight)
-            result.push_back(square.upRight(2));
-        if (captureDownLeft)
-            result.push_back(square.downLeft(2));
-        if (captureDownRight)
-            result.push_back(square.downRight(2));
-        if (captureUpLeft)
-            result.push_back(square.upLeft(2));
-        
+            result.push_back( Move(square, square.downLeft()) );
+            
         return result;
     }
 
