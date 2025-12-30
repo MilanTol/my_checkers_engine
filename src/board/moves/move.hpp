@@ -22,4 +22,9 @@ struct Move
     {
         return origin.square_id == move.origin.square_id && destination.square_id == move.destination.square_id;
     }
+
+    bool isCapture() const
+    {
+        return !(origin.square_id == captured.square_id);
+    }
 };
