@@ -54,11 +54,7 @@ int main()
         window.clear();
 
         drawBoard(window);
-
-        // drawCheckers(window, black_checkers);
-        // drawCheckers(window, white_checkers);
         drawCheckers(window, position);
-
 
         window.display();
     }
