@@ -26,7 +26,7 @@ public:
         }
 
         //init black checkers
-        for (int i=16; i<20; i++)
+        for (int i=0; i<20; i++)
         {   
             int square = 1 + 2*i;
             int column = square % 10;
@@ -39,7 +39,7 @@ public:
         }
 
         //init white checkers
-        for (int i=16; i<20; i++)
+        for (int i=0; i<20; i++)
         {   
             int square = 99 - 2*i;
             int column = square % 10;
