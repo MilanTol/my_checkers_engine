@@ -25,72 +25,89 @@ public:
     void execute_move(Move move)
     {   
         if (this->turn.forWhite())
-        {
-            if (this->isWhite(move.origin))
+        {           
+            if (this->isWhiteChecker(move.origin))
             {
                 this->setWhiteChecker(move.destination);
+                this->setEmpty(move.origin);
+                this->setEmpty(move.captured);
+    
+                if (move.destination.getRow() == 0)
+                {
+                    this->setEmpty(move.destination);
+                    this->setWhiteKing(move.destination);
+                }
+                
+                if (move.isCapture())
+                {
+                    if (LegalCheckerMoves(move.destination, *this).capturePossible)
+                    {
+                        return;
+                    }
+                }
             }
+
             else if (this->isWhiteKing(move.origin))
             {
                 this->setWhiteKing(move.destination);
-            }
+                this->setEmpty(move.origin);
+                this->setEmpty(move.captured);
 
-            this->setEmpty(move.origin);
-            this->setEmpty(move.captured);
-
-            if (move.destination.getRow() == 0)
-            {
-                this->setEmpty(move.destination);
-                this->setWhiteKing(move.destination);
-            }
-
-            if (move.isCapture())
-            {
-                if (
-                    LegalCheckerMoves(move.destination, *this).capturePossible or
-                    LegalKingMoves(move.destination, *this).capturePossible
-                    )
+                if (move.isCapture())
                 {
-                    return;
+                    if (LegalKingMoves(move.destination, *this).capturePossible)
+                    {
+                        return;
+                    }
                 }
             }
+
             std::cout<<"turn for black"<<std::endl;
             this->turn.end();
         }
 
         else if (this->turn.forBlack())
         {   
-            if (this->isBlack(move.origin))
+            
+            
+            if (this->isBlackChecker(move.origin))
             {
                 this->setBlackChecker(move.destination);
+                this->setEmpty(move.origin);
+                this->setEmpty(move.captured);
+
+                if (move.destination.getRow() == 9)
+                {
+                    this->setEmpty(move.destination);
+                    this->setBlackKing(move.destination);
+                }
+
+                if (move.isCapture())
+                {
+                    if (LegalCheckerMoves(move.destination, *this).capturePossible)
+                    {
+                        return;
+                    }
+                }
             }
+
             else if (this->isBlackKing(move.origin))
             {
                 this->setBlackKing(move.destination);
-            }
+                this->setEmpty(move.origin);
+                this->setEmpty(move.captured);
 
-            this->setEmpty(move.origin);
-            this->setEmpty(move.captured);
-
-            if (move.destination.getRow() == 9)
-            {
-                this->setEmpty(move.destination);
-                this->setBlackKing(move.destination);
-            }
-
-            if (move.isCapture())
-            {
-                if (
-                    LegalCheckerMoves(move.destination, *this).capturePossible or
-                    LegalKingMoves(move.destination, *this).capturePossible
-                    )
+                if (move.isCapture())
                 {
-                    return;
-                }
-            }  
+                    if (LegalKingMoves(move.destination, *this).capturePossible)
+                    {
+                        return;
+                    }
+                }  
+            }
+
             std::cout<<"turn for white"<<std::endl;
             this->turn.end();
         }
-
     };
 };

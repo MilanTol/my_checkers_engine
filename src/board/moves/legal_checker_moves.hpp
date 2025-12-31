@@ -32,9 +32,9 @@ struct LegalCheckerMoves
 
     bool squareHasTurn(const Position& position) const
     {
-        if (position.turn.forWhite() and position.isWhite(square)) 
+        if (position.turn.forWhite() and position.isWhiteChecker(square)) 
             return true;
-        if (position.turn.forBlack() and position.isBlack(square))
+        if (position.turn.forBlack() and position.isBlackChecker(square))
             return true;
         
         return false;

@@ -226,11 +226,10 @@ struct LegalKingMoves
 
     void checkMoveUpRight(const Position& position)
     {
-        for (int i=1; square.upRight(i).distanceFromEdge() > -1; i++)
+        for (int i=1; square.upRight(i).distanceFromEdge() >= 0; i++)
         {
             if
             (
-                position.turn.forWhite() and
                 position.isEmpty(square.upRight(i)) 
             )
             {
@@ -242,32 +241,14 @@ struct LegalKingMoves
             }
             
         }
-        
-        for (int i=1; square.upRight(i).distanceFromEdge() > -1; i++)
-        {
-            if
-            (
-                position.turn.forBlack() and
-                position.isEmpty(square.upRight(i))
-            )
-            {
-                moves.push_back(Move(square, square.upRight(i)));
-            }
-            else 
-            {
-                break;
-            }
-        }
-
     }
 
     void checkMoveDownRight(const Position& position)
     {
-        for (int i=1; square.downRight(i).distanceFromEdge() > -1; i++)
+        for (int i=1; square.downRight(i).distanceFromEdge() >= 0; i++)
         {
             if
             (
-                position.turn.forWhite() and
                 position.isEmpty(square.downRight(i)) 
             )
             {
@@ -279,32 +260,14 @@ struct LegalKingMoves
             }
             
         }
-        
-        for (int i=1; square.downRight(i).distanceFromEdge() > -1; i++)
-        {
-            if
-            (
-                position.turn.forBlack() and
-                position.isEmpty(square.downRight(i))
-            )
-            {
-                moves.push_back(Move(square, square.downRight(i)));
-            }
-            else 
-            {
-                break;
-            }
-        }
-
     }
 
     void checkMoveDownLeft(const Position& position)
     {
-        for (int i=1; square.downLeft(i).distanceFromEdge() > -1; i++)
+        for (int i=1; square.downLeft(i).distanceFromEdge() >= 0; i++)
         {
             if
             (
-                position.turn.forWhite() and
                 position.isEmpty(square.downLeft(i))
             )
             {
@@ -316,33 +279,14 @@ struct LegalKingMoves
             }
             
         }
-        
-        for (int i=1; square.downLeft(i).distanceFromEdge() > -1; i++)
-        {
-            if
-            (
-                position.turn.forBlack() and
-                position.isEmpty(square.downLeft(i))
-            )
-            {
-                moves.push_back(Move(square, square.downLeft(i)));
-            }
-            else
-            {
-                break;
-            }
-            
-        }
-
     }
 
     void checkMoveUpLeft(const Position& position)
     {
-        for (int i=1; square.upLeft(i).distanceFromEdge() > -1; i++)
+        for (int i=1; square.upLeft(i).distanceFromEdge() >= 0; i++)
         {
             if
             (
-                position.turn.forWhite() and
                 position.isEmpty(square.upLeft(i))
             )
             {
@@ -354,24 +298,6 @@ struct LegalKingMoves
             }
             
         }
-        
-        for (int i=1; square.upLeft(i).distanceFromEdge() > -1; i++)
-        {
-            if
-            (
-                position.turn.forBlack() and
-                position.isEmpty(square.upLeft(i))
-            )
-            {
-                moves.push_back(Move(square, square.upLeft(i)));
-            }
-            else
-            {
-                break;
-            }
-            
-        }
-
     }
 
 };
