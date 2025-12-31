@@ -3,36 +3,68 @@
 
 void drawWhiteChecker(sf::RenderWindow& window, int square)
 {
-        sf::CircleShape checker_img(cfg::checker_radius);
+    sf::CircleShape checker_img(cfg::checker_radius);
 
-        int column = square% 10;
-        int row = (square - column) / 10;
-        sf::Vector2f position = {column * cfg::squareSize.x, row * cfg::squareSize.y};
+    int column = square% 10;
+    int row = (square - column) / 10;
+    sf::Vector2f position = {column * cfg::squareSize.x, row * cfg::squareSize.y};
 
-        position += cfg::squareSize/2.0f; //add half a square to center the image on square
-        position.x -= cfg::checker_radius;
-        position.y -= cfg::checker_radius;
-        checker_img.setPosition(position);
+    position += cfg::squareSize/2.0f; //add half a square to center the image on square
+    position.x -= cfg::checker_radius;
+    position.y -= cfg::checker_radius;
+    checker_img.setPosition(position);
 
-        checker_img.setFillColor(sf::Color::White);
-        window.draw(checker_img);    
+    checker_img.setFillColor(sf::Color::White);
+    window.draw(checker_img);    
+}
+
+void drawWhiteChecker(sf::RenderWindow& window, sf::Vector2i position)
+{
+    sf::CircleShape checker_img(cfg::checker_radius);
+
+    sf::Vector2f position_f;
+    position_f.x = position.x;
+    position_f.y = position.y;
+
+    position_f.x -= cfg::checker_radius;
+    position_f.y -= cfg::checker_radius;
+    checker_img.setPosition(position_f);
+
+    checker_img.setFillColor(sf::Color::White);
+    window.draw(checker_img);
 }
 
 void drawBlackChecker(sf::RenderWindow& window, int square)
 {
-        sf::CircleShape checker_img(cfg::checker_radius);
+    sf::CircleShape checker_img(cfg::checker_radius);
 
-        int column = square% 10;
-        int row = (square - column) / 10;
-        sf::Vector2f position = {column * cfg::squareSize.x, row * cfg::squareSize.y};
+    int column = square% 10;
+    int row = (square - column) / 10;
+    sf::Vector2f position = {column * cfg::squareSize.x, row * cfg::squareSize.y};
 
-        position += cfg::squareSize/2.0f; //add half a square to center the image on square
-        position.x -= cfg::checker_radius;
-        position.y -= cfg::checker_radius;
-        checker_img.setPosition(position);
+    position += cfg::squareSize/2.0f; //add half a square to center the image on square
+    position.x -= cfg::checker_radius;
+    position.y -= cfg::checker_radius;
+    checker_img.setPosition(position);
 
-        checker_img.setFillColor(sf::Color::Black);
-        window.draw(checker_img);    
+    checker_img.setFillColor(sf::Color::Black);
+    window.draw(checker_img);    
+}
+
+void drawBlackChecker(sf::RenderWindow& window, sf::Vector2i position)
+{
+    sf::CircleShape checker_img(cfg::checker_radius);
+
+    sf::Vector2f position_f;
+    position_f.x = position.x;
+    position_f.y = position.y;
+
+    position_f.x -= cfg::checker_radius;
+    position_f.y -= cfg::checker_radius;
+    checker_img.setPosition(position_f);
+
+    checker_img.setFillColor(sf::Color::Black);
+    window.draw(checker_img);
 }
 
 void drawCheckers(sf::RenderWindow& window, Position position)

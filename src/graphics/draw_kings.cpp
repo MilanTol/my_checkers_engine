@@ -28,6 +28,32 @@ void drawWhiteKing(sf::RenderWindow& window, int square)
     window.draw(crown_img);
 }
 
+void drawWhiteKing(sf::RenderWindow& window, sf::Vector2i position)
+{
+    sf::CircleShape king_img(cfg::checker_radius);
+
+    sf::Vector2f position_f;
+    position_f.x = position.x;
+    position_f.y = position.y;
+
+    position_f.x -= cfg::checker_radius;
+    position_f.y -= cfg::checker_radius;
+    king_img.setPosition(position_f);
+
+    king_img.setFillColor(sf::Color::White);
+    window.draw(king_img); 
+
+    //draw crown
+    sf::CircleShape crown_img(cfg::checker_radius/2);
+
+    position_f.x += cfg::checker_radius/2;
+    position_f.y += cfg::checker_radius/2;
+    crown_img.setPosition(position_f);
+    
+    crown_img.setFillColor(sf::Color::Blue);
+    window.draw(crown_img);
+}
+
 void drawBlackKing(sf::RenderWindow& window, int square)
 {
     sf::CircleShape king_img(cfg::checker_radius);
@@ -54,6 +80,33 @@ void drawBlackKing(sf::RenderWindow& window, int square)
     crown_img.setFillColor(sf::Color::Red);
     window.draw(crown_img);
 }
+
+void drawBlackKing(sf::RenderWindow& window, sf::Vector2i position)
+{
+    sf::CircleShape king_img(cfg::checker_radius);
+
+    sf::Vector2f position_f;
+    position_f.x = position.x;
+    position_f.y = position.y;
+
+    position_f.x -= cfg::checker_radius;
+    position_f.y -= cfg::checker_radius;
+    king_img.setPosition(position_f);
+
+    king_img.setFillColor(sf::Color::Black);
+    window.draw(king_img); 
+
+    //draw crown
+    sf::CircleShape crown_img(cfg::checker_radius/2);
+
+    position_f.x += cfg::checker_radius/2;
+    position_f.y += cfg::checker_radius/2;
+    crown_img.setPosition(position_f);
+    
+    crown_img.setFillColor(sf::Color::Red);
+    window.draw(crown_img);
+}
+
 
 void drawKings(sf::RenderWindow& window, Position position)
 {

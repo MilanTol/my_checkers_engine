@@ -15,6 +15,7 @@
 #include "graphics/draw_board.hpp"
 #include "graphics/draw_checkers.hpp"
 #include "graphics/draw_kings.hpp"
+#include "graphics/draw_legal_move.hpp"
 
 Square positionToSquare(sf::Vector2i position)
 {
@@ -78,6 +79,44 @@ int main()
         drawBoard(window);
         drawCheckers(window, position);
         drawKings(window, position);
+
+        if (input.mouseClicked) //draw legal moves
+        {
+            if (position.isWhiteChecker(clicked_square) && position.turn.forWhite())
+            {   
+                drawWhiteChecker(window, sf::Mouse::getPosition(window));
+            }
+            if (position.isBlackChecker(clicked_square) && position.turn.forBlack())
+            {
+                drawBlackChecker(window, sf::Mouse::getPosition(window));
+            }
+            if (position.isWhiteKing(clicked_square) && position.turn.forWhite())
+            {
+                drawWhiteKing(window, sf::Mouse::getPosition(window));
+            }
+            if (position.isBlackKing(clicked_square) && position.turn.forBlack())
+            {
+                drawBlackKing(window, sf::Mouse::getPosition(window));
+            }
+
+            LegalMoves legal_moves = LegalMoves(position);
+
+            std::vector<Move> legal_checker_moves = LegalCheckerMoves(clicked_square, position).moves;
+            for (Move move : legal_checker_moves)
+            {
+                if (!move.isCapture() && legal_moves.capturePossible)
+                    continue;
+                drawLegalMove(window, move);
+            }
+
+            std::vector<Move> legal_king_moves = LegalKingMoves(clicked_square, position).moves;
+            for (Move move : legal_king_moves)
+            {
+                if (!move.isCapture() && legal_moves.capturePossible)
+                    continue;
+                drawLegalMove(window, move);
+            }
+        }
 
         window.display();
     }
